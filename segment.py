@@ -67,29 +67,24 @@ def segment(img):
     fixed_segment = (segment >0.4)+0.0
     return mask_pixels_based , mask_segment , mean_segment , fixed_segment
 
-image_directory = "./test_images"
-skin_directory = "./skin-images"
-#skin_images_names = sorted(os.listdir(skin_directory))
 
-test_images_names = sorted(os.listdir(image_directory))
+if __name__ == "__main__":
+    
+    images_directory = "./test_images"
 
-rnd  = random.randint(0, len(image_directory))
-path = image_directory +"/"+test_images_names[rnd]
-img = cv2.imread(path,-1)
-mask_pixels_based , mask_segment , mean_segment , fixed_segment = segment(img)
-cv2.imshow('image',img)
-'''
-vis1 = np.concatenate((mask_pixels_based, mask_segment), axis=1)
-vis2 = np.concatenate((mean_segment, fixed_segment), axis=1)
-concat_img = np.concatenate((vis1, vis2), axis=0)
-cv2.imshow('results',concat_img)
-'''
+    test_images_names = sorted(os.listdir(images_directory))
 
+    rnd  = random.randint(0, len(images_directory))
+    path = images_directory +"/"+test_images_names[rnd]
+    img = cv2.imread(path,-1)
+    mask_pixels_based , mask_segment , mean_segment , fixed_segment = segment(img)
 
-cv2.imshow('pixel_based',mask_pixels_based)
-cv2.imshow('superpixel_mask',mask_segment)
-cv2.imshow('superpixel_segmentation_mean_thresh',mean_segment)
-cv2.imshow('superpixel_segmentation_fixed_thresh',fixed_segment)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    # display image and segmentations
+    cv2.imshow('image',img)
+    cv2.imshow('pixel_based',mask_pixels_based)
+    cv2.imshow('superpixel_mask',mask_segment)
+    cv2.imshow('superpixel_segmentation_mean_thresh',mean_segment)
+    cv2.imshow('superpixel_segmentation_fixed_thresh',fixed_segment)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
